@@ -22,8 +22,11 @@ namespace XBTFSqlDbScaffolding
         private readonly string[] _staticDataTables;
         private readonly string[] _excludedTables;
 
+        private readonly ScaffolderSettings _settings;
+
         public Scaffolder(ScaffolderSettings settings)
         {
+            _settings = settings;
             _connectionString = settings.ConnectionString;
             _outputDir = settings.OutputDir;
             _defaultNamespace = settings.DefaultNamespace;
@@ -203,7 +206,8 @@ namespace XBTFSqlDbScaffolding
                 {"@repository_class", $"{modelName}Repository" },
                 {"@repository_interface", $"I{modelName}Repository" },
                 {"@model_ctor_2", ctor2 },
-                {"@collections_notify_changed", collectionsNotifyChanged }
+                {"@collections_notify_changed", collectionsNotifyChanged },
+                {"@enum_namespace", _settings.EnumNamespace }
             };
 
             await GenerateFileFromTemplate("Model", table.Name, tags);
@@ -475,8 +479,8 @@ namespace XBTFSqlDbScaffolding
                         var constraintName = reader["CONSTRAINT_NAME"].ToString();
                         var constraintType = reader["CONSTRAINT_TYPE"].ToString();
                         var columnName = reader["COLUMN_NAME"].ToString();
-                        var table = tables.First(f => f.Name == tableName);
-                        table.Constraints.Add(new SqlTableConstraint(constraintName, constraintType, columnName));
+                        var table = tables.FirstOrDefault(f => f.Name == tableName);
+                        table?.Constraints.Add(new SqlTableConstraint(constraintName, constraintType, columnName));
                     }
                 }
             }
@@ -502,8 +506,8 @@ namespace XBTFSqlDbScaffolding
                         var fkColumn = reader["FK_Column"].ToString();
                         var pkTable = reader["PK_Table"].ToString();
                         var pkColumn = reader["PK_Column"].ToString();
-                        var table = tables.First(f => f.Name == fkTable);
-                        table.FKs.Add(new SqlTableForeignKey(fkName, fkTable, fkColumn, pkTable, pkColumn));
+                        var table = tables.FirstOrDefault(f => f.Name == fkTable);
+                        table?.FKs.Add(new SqlTableForeignKey(fkName, fkTable, fkColumn, pkTable, pkColumn));
                     }
                 }
             }
@@ -526,6 +530,12 @@ namespace XBTFSqlDbScaffolding
                         var dataType = reader["DATA_TYPE"].ToString();
                         var isPk = columnName == pkColumnName;
                         var fk = table.FKs.FirstOrDefault(a => a.FkColumn == columnName);
+
+                        var enumMapping = _settings.EnumColumnMapping
+                            .FirstOrDefault(f => f.Entity == table.Name && f.Prop == columnName);
+                        if (enumMapping != null)
+                            dataType = enumMapping.Enum;
+
                         var column = new SqlTableColumn(columnName, ordinalPosition, isNullable, dataType, isPk, fk);
                         table.Columns.Add(column);
                     }

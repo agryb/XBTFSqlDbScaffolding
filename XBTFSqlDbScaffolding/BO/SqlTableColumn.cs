@@ -24,7 +24,11 @@ namespace XBTFSqlDbScaffolding.BO
         }
 
         public string NetFrameworkDateType =>
-            !IsNullable ? SqlTypeNameMapper[DataType] : $"Nullable<{SqlTypeNameMapper[DataType]}>";
+            !IsNullable ? GetType(DataType) : $"Nullable<{GetType(DataType)}>";
+
+
+        private static string GetType(string dataType)
+            => SqlTypeNameMapper.ContainsKey(dataType) ? SqlTypeNameMapper[dataType] : dataType;
 
 
         private static readonly Dictionary<string, string> SqlTypeNameMapper = new Dictionary<string, string>
@@ -59,7 +63,7 @@ namespace XBTFSqlDbScaffolding.BO
             {"uniqueidentifier", "Guid"},
             {"varbinary", "Byte[]"},
             {"varchar", "String"},
-            {"xml", "Xml"},
+            {"xml", "String"},
         };
 
         

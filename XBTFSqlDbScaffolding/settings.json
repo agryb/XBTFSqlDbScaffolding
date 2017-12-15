@@ -3,6 +3,9 @@
   "DefaultNamespace": "",
   "DomainName": "",
   "OutputDir": "",
-  "StaticDataTables": [ ],
-  "ExcludedTables": [ ] 
+  "StaticDataTables": [],
+  "ExcludedTables": [],
+
+  "EnumNamespace": "",
+  "EnumColumnMapping": []
 }

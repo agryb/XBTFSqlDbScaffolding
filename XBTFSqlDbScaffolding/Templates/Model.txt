@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using XBTF.Collections.ObjectModel;
 using XBTF.Data.Context;
 using XBTF.Data.Mapping;
+using @enum_namespace;
 
 namespace @namespace_name
 {
