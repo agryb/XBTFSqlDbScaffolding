@@ -1,0 +1,23 @@
+﻿using System;
+using XBTF.Data.Context;
+using XBTF.Data.Cache;
+
+namespace @namespace_name
+{
+    public partial class @context_name : DataSourceContext, @context_interface_name
+    {
+@data_source_context_fields
+
+		public IDataSourceContextService<@context_interface_name> ContextService { get; }
+
+@data_source_context_props
+
+		public @context_name(IDataSourceContextService<@context_interface_name> contextSvc, ICacheService cacheService, Func<IDataSourceConnection> connectionGetter, DataAccessFactory daFactory)
+			: base(contextSvc, cacheService, connectionGetter, daFactory.EntityMapper)
+		{
+			ContextService = contextSvc;
+@data_source_context_ctor_init
+		}
+
+    }
+}

@@ -1,0 +1,14 @@
+﻿using XBTF.Data;
+using XBTF.Data.Repositories;
+using XBTF.Data.SqlClient;
+
+namespace @namespace_name
+{
+    public abstract class @base_repository_type_name<TEntity> : BaseRepository<@context_interface_name, TEntity>
+        where TEntity : class, IBaseEntity
+    {
+        protected @base_repository_type_name(@context_interface_name dataSourceContext)
+            : base(dataSourceContext, new SqlCommandBuilder<TEntity>(dataSourceContext.EntityMapper.GetEntityMapping<TEntity>()))
+        { }
+    }
+}

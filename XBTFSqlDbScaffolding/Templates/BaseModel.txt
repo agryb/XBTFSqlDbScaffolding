@@ -1,0 +1,20 @@
+﻿using System;
+using XBTF.Data;
+using XBTF.Data.Context;
+using XBTF.Data.Mapping;
+
+namespace @namespace_name
+{
+    public abstract class BaseModel : BaseEntity<@context_interface_name>
+    {
+        [IdentityReference]
+        [ColumnMapping(ColumnName = "Id", QueryParameterName = "@id")]
+        public Guid Id { get; }
+
+        protected BaseModel(IDataSourceContextService<@context_interface_name> dataSourceContextService, Guid id)
+            : base(dataSourceContextService)
+        {
+            Id = id;
+        }
+    }
+}

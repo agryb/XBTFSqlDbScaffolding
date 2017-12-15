@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using XBTF.Data.Repositories;
+
+namespace @namespace_name
+{
+	public partial interface I@model_nameRepository : IBaseRepository<@model_name>
+	{
+		Task<List<@model_name>> GetAll();
+		Task<@model_name> GetById(Guid id);
+		Task<@model_name> GetBy@model_nameId(@pk_property_type id);
+	}
+}

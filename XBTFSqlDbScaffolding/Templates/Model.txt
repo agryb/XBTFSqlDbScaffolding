@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using XBTF.Collections.ObjectModel;
+using XBTF.Data.Context;
+using XBTF.Data.Mapping;
+
+namespace @namespace_name
+{
+	[TableMapping(TableName = "[@table_schema].[@table_name]", TableTypeName = "[@table_type_schema].[@table_type_name]")]
+	public partial class @model_name : BaseModel
+	{
+@model_private_fields
+
+
+		public override bool IsNew => !@pk_property_name.HasValue;
+
+@public_scalar_props
+
+		[EntityConstructor]
+		public @model_name(
+			IDataSourceContextService<@context_interface_name> dscs,
+			[MapToProperty(PropertyName = nameof(Id))] Guid id,
+@ctor_1_parameters)
+			: base(dscs, id)
+		{
+@ctor_1_private_fields_assignments
+		}
+
+@model_ctor_2
+
+@collections_notify_changed
+
+		protected override bool NotifyPropertyChangedToDataSource(string propertyName)
+		{
+			return DataSourceContext.@model_nameRepository.Update(this, propertyName);
+		}
+	}
+}

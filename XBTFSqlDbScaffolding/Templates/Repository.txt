@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using XBTF.Data.Mapping;
+
+namespace @namespace_name
+{
+	internal partial class @repository_class : @base_repository_type_name<@model_name>, @repository_interface
+    {
+
+		public IncludeSpecification<@model_name> BaseInclude
+			=> new IncludeSpecification<@model_name>(DataSourceContext.EntityMapper);
+    
+		public @repository_class(@context_interface_name dsc) 
+			: base(dsc) { }
+    
+    	public async Task<List<@model_name>> GetAll()
+    	{
+    		return await GetByCommand("SELECT * FROM [@table_schema].[@table_name]");
+    	}
+    
+    	public async Task<@model_name> GetById(Guid id)
+    	{
+            const string commandText = "SELECT * FROM [@table_schema].[@table_name] WHERE Id = @id";
+            var commandParameters = new[] { new KeyValuePair<string, object>("@id", id) };
+            var rslt = await GetByCommand(commandText, commandParameters);
+    		var e = rslt.FirstOrDefault();
+            return e;
+    	}
+    
+    	public async Task<@model_name> GetBy@pk_property_name(@pk_property_type id)
+    	{
+    	    var cmdParams = new[] { new KeyValuePair<string, object>("@id", id) };
+    		var rslt = await GetByCommand("SELECT * FROM [@table_schema].[@table_name] WHERE @pk_property_name=@id", cmdParams);
+    		return rslt.FirstOrDefault();
+    	}
+    }
+}

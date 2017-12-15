@@ -1,0 +1,11 @@
+﻿using XBTF.Data.Context;
+
+namespace @namespace_name
+{
+    public partial interface @context_interface_name : IDataSourceContext
+    {
+		new IDataSourceContextService<@context_interface_name> ContextService { get; }
+
+@repositories
+    }
+}

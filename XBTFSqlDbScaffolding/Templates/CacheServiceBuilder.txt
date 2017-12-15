@@ -1,0 +1,27 @@
+﻿using System.Threading.Tasks;
+using XBTF.Data.Context;
+using XBTF.Data.Cache;
+
+namespace @namespace_name
+{
+	public partial class CacheServiceBuilder
+	{
+		public ICacheService Build(DataAccessFactory dataAccessFactory)
+		{
+			var cacheService = new CacheService(LoadStaticData);
+
+@register_transient
+
+@register_permanent
+
+			cacheService.ReInitialize();
+			return cacheService;
+		}
+
+		private static async Task LoadStaticData(IDataSourceContext context)
+		{
+			var bc = (@context_interface_name)context;
+@static_data_repositories_get_all
+		}
+	}
+}

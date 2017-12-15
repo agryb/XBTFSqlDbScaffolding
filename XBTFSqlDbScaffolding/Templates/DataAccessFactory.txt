@@ -1,0 +1,19 @@
+﻿using XBTF.Data.Cache;
+using XBTF.Data.Mapping;
+
+namespace @namespace_name
+{
+	public partial class DataAccessFactory
+	{
+		private readonly bool _useConcurrentMode;
+
+		public EntityMapper EntityMapper { get; }
+
+		public DataAccessFactory(bool useConcurrentMode)
+		{
+			_useConcurrentMode = useConcurrentMode;
+			EntityMapper = new EntityMapper(_useConcurrentMode);
+		}
+@caches
+	}
+}

@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\BaseModel.txt" />
+    <None Remove="Templates\BaseRepository.txt" />
+    <None Remove="Templates\CacheServiceBuilder.txt" />
+    <None Remove="Templates\DataAccessFactory.txt" />
+    <None Remove="Templates\DataSourceContext.txt" />
+    <None Remove="Templates\IDataSourceContext.txt" />
+    <None Remove="Templates\IRepository.txt" />
+    <None Remove="Templates\Repository.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\CacheServiceBuilder.txt" />
+    <EmbeddedResource Include="Templates\IRepository.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\BaseModel.txt" />
+    <EmbeddedResource Include="Templates\BaseRepository.txt" />
+    <EmbeddedResource Include="Templates\DataAccessFactory.txt" />
+    <EmbeddedResource Include="Templates\DataSourceContext.txt" />
+    <EmbeddedResource Include="Templates\IDataSourceContext.txt" />
+    <EmbeddedResource Include="Templates\Model.txt" />
+    <EmbeddedResource Include="Templates\Repository.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
+  </ItemGroup>
+
+</Project>
